@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from drffuncserialize import hello_view
+from drffuncserialize.api import hello_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello', hello_view.hello_view),
+    path('hello', hello_view),
 ]

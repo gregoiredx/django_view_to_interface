@@ -1,7 +1,7 @@
 import pytest
 
-from drffuncserialize.error_handler import EntityNotFound
-from drffuncserialize.hello_view import hello_interface
+from drffuncserialize.errors import EntityNotFound
+from drffuncserialize.interfaces import hello_interface
 from drffuncserialize.models import Customer
 
 
@@ -13,8 +13,8 @@ def customer():
 @pytest.mark.django_db
 def test_python_ok(customer):
     customer_entity = hello_interface(pk=customer.pk)
-    assert customer_entity.first_name == 'John'
-    assert customer_entity.last_name == 'Doe'
+    assert customer_entity['first_name'] == 'John'
+    assert customer_entity['last_name'] == 'Doe'
 
 
 @pytest.mark.django_db
