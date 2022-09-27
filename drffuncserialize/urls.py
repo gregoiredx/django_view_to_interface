@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from drffuncserialize.api import hello_view
+from drffuncserialize.api import get_customer_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello', hello_view),
+    path('hello', get_customer_view),
 ]

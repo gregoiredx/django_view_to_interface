@@ -1,7 +1,9 @@
 from djangorestframework_camel_case.render import CamelCaseJSONRenderer
+from djangorestframework_camel_case.render import CamelCaseJSONRenderer
 from djangorestframework_camel_case.util import underscoreize
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.fields import CharField, IntegerField
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
@@ -17,9 +19,16 @@ class ResponseSerializer(Serializer):
     first_name = CharField()
     last_name = CharField()
 
+
+class CustomerReadPermission(IsAuthenticated):
+    def has_permission(self, request, view):
+        return super().has_permission(request, view) and request.user.has_perm('drffuncserialize.view_customer')
+
+
 @api_view()
 @renderer_classes((CamelCaseJSONRenderer,))
-def hello_view(request: Request):
+@permission_classes((CustomerReadPermission,))
+def get_customer_view(request: Request):
     raw_params = underscoreize(request.query_params)
     query_params_serializer = QueryParamSerializer(data=raw_params)
     query_params_serializer.is_valid(raise_exception=True)

@@ -1,6 +1,6 @@
 from typing import TypedDict
 
-from drffuncserialize.api import hello_view
+from drffuncserialize.api import get_customer_view
 from drffuncserialize.view_to_interface import call_view
 
 
@@ -9,5 +9,5 @@ class CustomerEntity(TypedDict):
     last_name: str
 
 
-def hello_interface(pk: int) -> CustomerEntity:
-    return call_view(hello_view, query_params={"id": pk})
+def get_customer(pk: int) -> CustomerEntity:
+    return call_view(get_customer_view, query_params={"id": pk})
